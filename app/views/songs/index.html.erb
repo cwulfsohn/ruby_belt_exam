@@ -1,0 +1,48 @@
+<h1>Hello, <%= session[:first_name]%> <%= session[:last_name]%>!</h1>
+
+<h3>All the songs in our hub:</h3>
+
+<a href="/logout" data-method="DELETE">Log Out</a>
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Artist</th>
+      <th>Title</th>
+      <th>No. of Times Song Has Been Added</th>
+      <th>Add to Playlist</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @songs.each do |song| %>
+      <tr>
+        <td><%= song.artist %></td>
+        <td><a href="songs/<%=song.id%>"><%= song.title %></a></td>
+        <td><%= song.playlists.count %></td>
+        <td>
+          <form action="/playlists/<%=song.id %>" method="post">
+            <input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+            <input type="submit" value="Add">
+          </form>
+        </td>
+      </tr>
+    <%end%>
+  </tbody>
+</table>
+
+<h3>Add a Song:</h3>
+<form action="/songs" method="post">
+  <input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+  <label for="title">Title: </label>
+  <input type="text" name="title">
+  <label for="artist">Artist: </label>
+  <input type="text" name="artist">
+  <input type="submit" value="Add Song">
+</form>
+
+<% if flash[:errors] %>
+  <% flash[:errors].each do |error| %>
+    <p><%= error %></p>
+  <% end %>
+<% end %>

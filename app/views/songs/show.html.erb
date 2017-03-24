@@ -1,0 +1,21 @@
+<a href="/logout" data-method="DELETE">Log Out</a>
+<a href="/songs">Dashboard</a>
+
+
+<h1>Others who added <%= @song.artist %> - <%= @song.title %></h1>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Times Added</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @playlist_user.group_by(&:user).each do |playlist| %>
+      <tr>
+        <td><a href="/users/<%=playlist[0].id%>"><%= playlist[0].first_name%> <%= playlist[0].last_name%></a></td>
+        <td><%= playlist[1].count%></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

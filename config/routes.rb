@@ -1,4 +1,17 @@
 Rails.application.routes.draw do
+  root 'songs#change'
+  get '/songs' => 'songs#index'
+  post '/songs' => 'songs#create'
+  get 'songs/:id' => 'songs#show'
+  post '/playlists/:id' => 'songs#playlist'
+
+  get 'main' => 'users#new'
+  post 'users' => 'users#create'
+  post 'login' => 'users#login'
+  get 'users/:id' => 'users#show'
+  delete 'logout' => 'users#logout'
+  get "*path" => redirect('/songs')
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
